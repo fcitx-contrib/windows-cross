@@ -69,8 +69,8 @@ set(CMAKE_MODULE_LINKER_FLAGS_INIT "-Wl,--no-insert-timestamp")
 set(CMAKE_SIZEOF_VOID_P 8)
 
 set(ECM_DIR "${CMAKE_SYSROOT}/share/ECM/cmake")
-set(GETTEXT_MSGMERGE_EXECUTABLE C:/msys64/usr/bin/msgmerge.exe)
-set(GETTEXT_MSGFMT_EXECUTABLE C:/msys64/usr/bin/msgfmt.exe)
+set(GETTEXT_MSGMERGE_EXECUTABLE "${HOST_SYSROOT}/bin/msgmerge.exe")
+set(GETTEXT_MSGFMT_EXECUTABLE "${HOST_SYSROOT}/bin/msgfmt.exe")
 
 # Do a no-op access on the CMAKE_TOOLCHAIN_FILE variable so that CMake will not
 # issue a warning on it being unused.
