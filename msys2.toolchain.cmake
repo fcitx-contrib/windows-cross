@@ -4,8 +4,24 @@ if(NOT DEFINED ARCH)
     set(ARCH "${CMAKE_HOST_SYSTEM_PROCESSOR}")
 endif()
 
-set(AMD64_SYSROOT "C:/msys64/clang64")
-set(ARM64_SYSROOT "C:/msys64/clangarm64")
+set(_MSYS2_ROOT "C:/msys64")
+
+if (DEFINED ENV{MSYSTEM_PREFIX} AND NOT "$ENV{MSYSTEM_PREFIX}" STREQUAL "")
+    file(TO_CMAKE_PATH "$ENV{MSYSTEM_PREFIX}" _MSYS2_PREFIX)
+    get_filename_component(_MSYS2_ROOT "${_MSYS2_PREFIX}" DIRECTORY)
+elseif(DEFINED ENV{MSYS2_ROOT} AND NOT "$ENV{MSYS2_ROOT}" STREQUAL "")
+    file(TO_CMAKE_PATH "$ENV{MSYS2_ROOT}" _MSYS2_ROOT) 
+endif()
+
+if (NOT EXISTS "${_MSYS2_ROOT}")
+    message(FATAL_ERROR
+        "Could not determine MSYS2 location at ${_MSYS2_ROOT}.\n"
+        "Run CMake from an MSYS2 shell (MSYSTEM_PREFIX),\n"
+        "or set MSYS2_ROOT in the environment.")
+endif()
+
+set(AMD64_SYSROOT "${_MSYS2_ROOT}/clang64")
+set(ARM64_SYSROOT "${_MSYS2_ROOT}/clangarm64")
 
 if (CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "AMD64")
     set(HOST_SYSROOT "${AMD64_SYSROOT}")
